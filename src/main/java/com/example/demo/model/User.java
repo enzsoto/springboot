@@ -45,7 +45,7 @@ public class User {
 	@Column(name = "ISACTIVE")
 	private Boolean isActive;
 	
-	@OneToMany(mappedBy = "USER", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Phone> phones;
 
 	public User() {
