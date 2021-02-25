@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,9 +10,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "USER")
@@ -24,8 +27,13 @@ public class User {
 	@Column(name = "ID")
 	private Long id;
 
+	@GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
+	@GeneratedValue(generator = "uuid")
 	@Column(name = "CORRID")
 	private UUID corrId;
+	
+	@Column(name = "NAME")
+	private String name;
 	
 	@Column(name = "EMAIL")
 	private String email;
@@ -34,46 +42,49 @@ public class User {
 	private String password;
 	
 	@Column(name = "CREATED")
-	private LocalDate created;
+	private Date created;
 	
 	@Column(name = "MODIFIED")
-	private LocalDate modified;
+	private Date modified;
 	
-	@Column(name = "LASTMODIFIED")
-	private LocalDate lastModified;
+	@Column(name = "LASTLOGIN")
+	private Date lastLogin;
 	
 	@Column(name = "ISACTIVE")
 	private Boolean isActive;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "user_id")
 	private List<Phone> phones;
 
 	public User() {
 		super();
 	}
 
-	public User(Long id, UUID corrId, String email, String password, LocalDate created, LocalDate modified,
-			LocalDate lastModified, Boolean isActive, List<Phone> phones) {
+	public User(Long id, UUID corrId, String name, String email, String password, Date created, Date modified,
+			Date lastLogin, Boolean isActive, List<Phone> phones) {
 		super();
 		this.id = id;
 		this.corrId = corrId;
+		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.created = created;
 		this.modified = modified;
-		this.lastModified = lastModified;
+		this.lastLogin = lastLogin;
 		this.isActive = isActive;
 		this.phones = phones;
 	}
 
-	public User(String email, String password, LocalDate created, LocalDate modified, LocalDate lastModified,
+	public User(String name, String email, String password, Date created, Date modified, Date lastLogin,
 			Boolean isActive, List<Phone> phones) {
 		super();
+		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.created = created;
 		this.modified = modified;
-		this.lastModified = lastModified;
+		this.lastLogin = lastLogin;
 		this.isActive = isActive;
 		this.phones = phones;
 	}
@@ -94,6 +105,14 @@ public class User {
 		this.corrId = corrId;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -110,28 +129,28 @@ public class User {
 		this.password = password;
 	}
 
-	public LocalDate getCreated() {
+	public Date getCreated() {
 		return created;
 	}
 
-	public void setCreated(LocalDate created) {
+	public void setCreated(Date created) {
 		this.created = created;
 	}
 
-	public LocalDate getModified() {
+	public Date getModified() {
 		return modified;
 	}
 
-	public void setModified(LocalDate modified) {
+	public void setModified(Date modified) {
 		this.modified = modified;
 	}
 
-	public LocalDate getLastModified() {
-		return lastModified;
+	public Date getLastLogin() {
+		return lastLogin;
 	}
 
-	public void setLastModified(LocalDate lastModified) {
-		this.lastModified = lastModified;
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
 	}
 
 	public Boolean getIsActive() {
@@ -152,9 +171,10 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", corrId=" + corrId + ", email=" + email + ", password=" + password + ", created="
-				+ created + ", modified=" + modified + ", lastModified=" + lastModified + ", isActive=" + isActive
-				+ ", phones=" + phones + "]";
+		return "User [id=" + id + ", corrId=" + corrId + ", name=" + name + ", email=" + email + ", password="
+				+ password + ", created=" + created + ", modified=" + modified + ", lastLogin=" + lastLogin
+				+ ", isActive=" + isActive + ", phones=" + phones + "]";
 	}
 
+	
 }

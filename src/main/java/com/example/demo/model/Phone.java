@@ -26,8 +26,51 @@ public class Phone {
 	@Column(name = "COUNTRYCODE")
 	private Integer countryCode;
 
-	@ManyToOne
-	@JoinColumn(name = "user_id", referencedColumnName = "ID")
-	private User user;
-		
+	public Phone() {
+		super();
+	}
+
+	public Phone(Long id, Integer number, Integer countryCode) {
+		super();
+		this.id = id;
+		this.number = number;
+		this.countryCode = countryCode;
+	}
+
+	public Phone(Integer number, Integer countryCode) {
+		super();
+		this.number = number;
+		this.countryCode = countryCode;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+
+	public Integer getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(Integer countryCode) {
+		this.countryCode = countryCode;
+	}
+
+	@Override
+	public String toString() {
+		return "Phone [id=" + id + ", number=" + number + ", countryCode=" + countryCode + "]";
+	}
+	
+	
 }
