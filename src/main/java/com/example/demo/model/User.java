@@ -27,8 +27,8 @@ public class User {
 	@Column(name = "ID")
 	private Long id;
 
-	@GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+	@GeneratedValue(generator = "uuid2")
 	@Column(name = "CORRID")
 	private UUID corrId;
 	

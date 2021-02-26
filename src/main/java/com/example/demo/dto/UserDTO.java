@@ -9,6 +9,7 @@ public class UserDTO {
 	private Date modified;
 	private Date lastLogin;
 	private Boolean isActive;
+	
 	public Long getId() {
 		return id;
 	}
